@@ -2,6 +2,7 @@ package com.dyma.tennis.web;
 
 import com.dyma.tennis.Player;
 import com.dyma.tennis.PlayerList;
+import com.dyma.tennis.service.PlayerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/players")
 public class PlayerController {
+
+    @Autowired
+    private PlayerService playerService;
 
     @Operation(summary = "Finds players", description = "Finds players")
     @ApiResponses(value = {
@@ -28,7 +33,7 @@ public class PlayerController {
     })
     @GetMapping
     public List<Player> list() {
-        return PlayerList.ALL;
+        return playerService.getAllPlayers();
     }
 
     @Operation(summary = "Finds a player", description = "Finds a player")
